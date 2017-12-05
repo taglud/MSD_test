@@ -1,0 +1,24 @@
+---
+- name: Download files from github to the host
+  get_url:
+    url: https://github.com/taglud/MSD_test/blob/master/{{warname}}
+    dest: {{local_warfile}}
+    copy: no
+    owner: tomcat7
+    group: tomcat7
+    mode: 0755
+
+- name: copy the war file to the executable repertory
+  command: cp {{local_warfile}}/{{warname}} {{tomcat_webapps}}
+  notify:
+    - Restart tomcat7
+
+- name: drop the configuration file into supervisord folder
+  get_url:
+    url: https://github.com/taglud/MSD_test/blob/master/{{config_sup}}
+    dest: {{local_warfile}}
+    copy: no
+    mode: 0755
+
+- name: copy the config file into supervisord repertory
+  command: cp {{local_warfile}}/{{config_sup}} {{config_path}}
