@@ -1,6 +1,0 @@
----
-- hosts: webservers
-  tasks: 
-  - name: installation de nginx sur le webserver
-    yum: name=nginx state=latest
- 
